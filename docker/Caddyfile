@@ -1,0 +1,40 @@
+{$DOMAIN} {
+    # Gzip compression
+    encode gzip
+
+    # Security headers
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        -Server
+    }
+
+    # SSE endpoint — must be before the generic @api route so it takes priority
+    @sse path /api/v1/stream
+    route @sse {
+        reverse_proxy backend:8000 {
+            flush_interval -1
+            header_up Connection ""
+        }
+    }
+
+    # API — forward to backend
+    @api path /api/*
+    route @api {
+        reverse_proxy backend:8000 {
+            header_up Host {host}
+            header_up X-Real-IP {remote_host}
+            header_up X-Forwarded-For {remote_host}
+        }
+    }
+
+    # Frontend static files
+    reverse_proxy frontend:80
+}
+
+# Redirect www to non-www (only for non-localhost)
+www.{$DOMAIN} {
+    redir https://{$DOMAIN}{uri} permanent
+}

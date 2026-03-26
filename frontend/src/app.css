@@ -1,0 +1,278 @@
+/* ── QGIS OSINT Matrix — Global Styles ────────────────────────────────────── */
+
+
+:root {
+  /* ── QGIS Brand ──────────────────────────────────────────────────────── */
+  --qgis-dark-green:   #589632;
+  --qgis-light-green:  #93b023;
+  --qgis-lemon:        #f0e64a;
+  --qgis-orange:       #ee7913;
+
+  /* ── Navy background system ──────────────────────────────────────────── */
+  --qgis-navy:         #1a2332;
+  --qgis-navy-deep:    #111c2b;
+  --qgis-navy-mid:     #243044;
+
+  /* ── Derived tints ───────────────────────────────────────────────────── */
+  --qgis-green-glow:   rgba(88, 150, 50, 0.50);
+  --qgis-green-dim:    rgba(88, 150, 50, 0.20);
+
+  /* ── Glassmorphism surfaces ──────────────────────────────────────────── */
+  --panel-bg:          rgba(17, 28, 43, 0.78);
+  --panel-border:      rgba(88, 150, 50, 0.22);
+  --panel-blur:        blur(18px) saturate(140%);
+  --panel-radius:      16px;
+  --panel-shadow:      0 8px 32px rgba(0,0,0,0.50),
+                       0 0 0 1px rgba(88,150,50,0.07),
+                       inset 0 1px 0 rgba(147,176,35,0.09);
+
+  /* ── Layer colours ───────────────────────────────────────────────────── */
+  --layer-contributors: #93b023;
+  --layer-supporting:   #f0e64a;
+  --layer-members:      #ee7913;
+  --layer-usergroups:   #589632;
+  --layer-analytics:    #5bc8af;
+  --layer-events:       #e05c5c;
+  --layer-mirrors:      #c8d8e8;
+  --layer-trainers:     #a8c4e0;
+  --layer-orgs:         #7ecba1;
+
+  /* ── HUD chrome ──────────────────────────────────────────────────────── */
+  --hud-text:          #c8ddb0;
+  --hud-text-dim:      rgba(200, 221, 176, 0.45);
+  --hud-accent:        #93b023;
+  --bg:                #111c2b;
+
+  /* ── Typography ──────────────────────────────────────────────────────── */
+  --font-display:      'Trueno', 'Outfit', system-ui, sans-serif;
+  --font-mono:         'Share Tech Mono', 'Courier New', monospace;
+  --font-label:        'Outfit', system-ui, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--hud-text);
+  font-family: var(--font-label);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Glass card mixin ─────────────────────────────────────────────────────── */
+.glass-panel {
+  background: var(--panel-bg);
+  backdrop-filter: var(--panel-blur);
+  -webkit-backdrop-filter: var(--panel-blur);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--panel-radius);
+  box-shadow: var(--panel-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(147,176,35,0.30), transparent);
+  pointer-events: none;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(88,150,50,0.35);
+  border-radius: 2px;
+}
+
+/* ── MapLibre overrides ──────────────────────────────────────────────────── */
+.maplibregl-map {
+  font-family: var(--font-label) !important;
+}
+.maplibregl-popup-content {
+  background: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+.maplibregl-popup-tip {
+  display: none !important;
+}
+.maplibregl-ctrl-attrib {
+  background: rgba(17,28,43,0.7) !important;
+  color: var(--hud-text-dim) !important;
+  font-size: 10px !important;
+  border-radius: 8px !important;
+}
+.maplibregl-ctrl-attrib a {
+  color: var(--hud-accent) !important;
+}
+
+/* ── Global keyframe animations ──────────────────────────────────────────── */
+
+/* General fade-in for newly added items */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Number counter glow pulse */
+@keyframes stat-glow {
+  0%, 100% { text-shadow: 0 0 6px currentColor; }
+  50%       { text-shadow: 0 0 16px currentColor, 0 0 32px currentColor; }
+}
+
+/* Breathing effect for waiting states */
+@keyframes breathe {
+  0%, 100% { opacity: 0.35; }
+  50%       { opacity: 0.9; }
+}
+
+/* Data burst — used for SSE-triggered items */
+@keyframes data-burst {
+  0%   { box-shadow: 0 0 0 0 rgba(147,176,35,0.6); }
+  60%  { box-shadow: 0 0 0 8px rgba(147,176,35,0); }
+  100% { box-shadow: 0 0 0 0 rgba(147,176,35,0); }
+}
+
+/* Radar sweep (could be used on a future radar element) */
+@keyframes radar-sweep {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Corner bracket accent flicker */
+@keyframes corner-flicker {
+  0%, 95%, 100% { opacity: 1; }
+  96%            { opacity: 0.3; }
+  98%            { opacity: 0.8; }
+}
+
+/* ── Upcoming Event Alert-Card Markers ─────────────────────────────────────
+   Uses CSS custom property --ue-color for per-event accent colour.
+   Structure: .ue-marker > .ue-card + .ue-stem + .ue-dot
+   The dot sits at the map coordinate (marker anchor: bottom + 4px offset).
+-------------------------------------------------------------------------- */
+.ue-marker {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  pointer-events: none;              /* stem & dot don't block map drags   */
+  filter:         drop-shadow(0 6px 20px rgba(0,0,0,0.65));
+}
+
+.ue-card {
+  pointer-events:   all;             /* card IS interactive                 */
+  background:       rgba(10, 16, 28, 0.93);
+  border:           1px solid var(--ue-color);
+  border-radius:    5px;
+  padding:          8px 26px 7px 10px;
+  min-width:        172px;
+  max-width:        220px;
+  text-align:       center;
+  position:         relative;
+  font-family:      var(--font-mono);
+  box-shadow:       0 0 22px color-mix(in srgb, var(--ue-color) 28%, transparent),
+                    inset 0 1px 0 rgba(255,255,255,0.05);
+  transition:       opacity 0.2s;
+}
+.ue-hidden { display: none !important; }
+
+.ue-close {
+  pointer-events: all;
+  position:       absolute;
+  top:            4px;
+  right:          7px;
+  background:     none;
+  border:         none;
+  color:          rgba(200, 220, 180, 0.32);
+  font-size:      14px;
+  cursor:         pointer;
+  padding:        0;
+  line-height:    1;
+  transition:     color 0.15s;
+}
+.ue-close:hover { color: rgba(200, 220, 180, 0.85); }
+
+.ue-header {
+  font-size:      9px;
+  font-weight:    700;
+  letter-spacing: 3px;
+  color:          var(--ue-color);
+  text-shadow:    0 0 10px var(--ue-color);
+  margin-bottom:  5px;
+  text-transform: uppercase;
+}
+
+.ue-title {
+  font-size:    11px;
+  font-weight:  700;
+  color:        #f1f5f9;
+  line-height:  1.35;
+  margin-bottom: 3px;
+}
+
+.ue-meta {
+  font-size:      9px;
+  color:          rgba(200, 221, 176, 0.52);
+  letter-spacing: 0.4px;
+}
+
+.ue-dates {
+  font-size:   10px;
+  color:       var(--ue-color);
+  margin-top:  2px;
+  opacity:     0.9;
+}
+
+.ue-footer {
+  pointer-events: all;
+  display:        block;
+  margin-top:     5px;
+  font-size:      9px;
+  letter-spacing: 1.5px;
+  color:          rgba(200, 221, 176, 0.38);
+  text-decoration: none;
+  border-top:     1px solid rgba(255, 255, 255, 0.06);
+  padding-top:    5px;
+  transition:     color 0.15s;
+}
+.ue-footer:hover { color: var(--ue-color); }
+
+.ue-stem {
+  width:        0;
+  height:       42px;
+  border-left:  1px dashed var(--ue-color);
+  opacity:      0.55;
+}
+
+.ue-dot {
+  width:         8px;
+  height:        8px;
+  border-radius: 50%;
+  background:    var(--ue-color);
+  box-shadow:    0 0 10px var(--ue-color), 0 0 4px var(--ue-color);
+}
+
+/* Past event dims everything to grey */
+.is-past .ue-card  { border-color: rgba(75, 85, 99, 0.55); box-shadow: none; }
+.is-past .ue-header,
+.is-past .ue-dates,
+.is-past .ue-footer { color: rgba(100, 116, 139, 0.6); text-shadow: none; }
+.is-past .ue-title,
+.is-past .ue-meta   { color: rgba(100, 116, 139, 0.6); }
+.is-past .ue-stem   { border-color: rgba(75, 85, 99, 0.45); }
+.is-past .ue-dot    { background: rgba(75, 85, 99, 0.65); box-shadow: none; }

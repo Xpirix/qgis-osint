@@ -1,0 +1,151 @@
+# process-compose.yml — full native dev stack (no Docker required)
+#
+# Start everything with:    just dev          (inside nix develop)
+#   or directly with:       process-compose up
+#
+# Data lives in .dev-data/ (gitignored).
+# Logs are streamed to the TUI and to .dev-data/logs/.
+#
+# Process start order:
+#   postgres ──► postgres-init ──► backend
+#   redis    ──►                   backend
+#                                  frontend  (independent)
+
+version: "0.5"
+
+log_location: ".dev-data/logs/process-compose.log"
+
+environment:
+  - "POSTGRES_HOST=localhost"
+  - "POSTGRES_PORT=5433"
+  - "POSTGRES_DB=osint_matrix"
+  - "POSTGRES_USER=qgis"
+  - "POSTGRES_PASSWORD=devpassword"
+  - "REDIS_URL=redis://localhost:6380/0"
+  - "LOG_LEVEL=DEBUG"
+
+processes:
+
+  # ── Redis ────────────────────────────────────────────────────────────────────
+  redis:
+    command: |
+      # Stop any leftover redis on this port before starting
+      redis-cli -p 6380 shutdown nosave 2>/dev/null || true
+      sleep 0.3
+      mkdir -p "$PWD/.dev-data/redis"
+      exec redis-server \
+        --port 6380 \
+        --bind 127.0.0.1 \
+        --loglevel notice \
+        --save 60 1 \
+        --dir "$PWD/.dev-data/redis"
+    readiness_probe:
+      exec:
+        command: "redis-cli -p 6380 ping"
+      initial_delay_seconds: 1
+      period_seconds: 2
+      failure_threshold: 10
+    availability:
+      restart: on_failure
+
+  # ── Postgres + PostGIS ───────────────────────────────────────────────────────
+  postgres:
+    command: |
+      set -e
+      PGDATA="$PWD/.dev-data/postgres"
+      PGPORT=5433
+
+      # Ensure parent directories exist before initdb or postgres runs
+      mkdir -p "$PGDATA" .dev-data/logs .dev-data/redis
+
+      # Initialise data directory on first run
+      if [ ! -f "$PGDATA/PG_VERSION" ]; then
+        echo "[postgres] Initialising data directory at $PGDATA"
+        initdb -D "$PGDATA" \
+          --username=qgis \
+          --auth-host=trust \
+          --auth-local=trust \
+          --no-instructions
+      fi
+
+      # Allow password-less local connections (dev only)
+      cat > "$PGDATA/pg_hba.conf" <<'HBA'
+      local   all   all              trust
+      host    all   all  127.0.0.1/32 trust
+      host    all   all  ::1/128      trust
+      HBA
+
+      # Kill any lingering server holding shared memory, then clear stale files
+      pg_ctl stop -D "$PGDATA" -m fast 2>/dev/null || true
+      rm -f "$PGDATA/postmaster.pid" "$PGDATA"/.s.PGSQL.*
+
+      exec postgres -D "$PGDATA" \
+        -c listen_addresses=localhost \
+        -c port=$PGPORT \
+        -c unix_socket_directories="$PGDATA" \
+        -c log_min_messages=WARNING \
+        -c log_destination=stderr
+    readiness_probe:
+      exec:
+        command: "pg_isready -U qgis -d postgres -p 5433 -h localhost"
+      initial_delay_seconds: 2
+      period_seconds: 2
+      failure_threshold: 15
+    availability:
+      restart: on_failure
+
+  # ── Create DB + PostGIS extension (one-shot) ─────────────────────────────────
+  postgres-init:
+    command: |
+      set -e
+      EXISTS=$(psql -U qgis -h localhost -p 5433 -d postgres \
+        -tc "SELECT 1 FROM pg_database WHERE datname='osint_matrix'")
+      if [ -z "$(echo $EXISTS | tr -d '[:space:]')" ]; then
+        echo "[postgres-init] Creating database osint_matrix"
+        createdb -U qgis -h localhost -p 5433 osint_matrix
+      fi
+      psql -U qgis -h localhost -p 5433 -d osint_matrix \
+        -c "CREATE EXTENSION IF NOT EXISTS postgis;"
+      echo "[postgres-init] Done"
+    depends_on:
+      postgres:
+        condition: process_healthy
+    availability:
+      restart: exit_on_failure
+
+  # ── FastAPI backend with hot-reload ──────────────────────────────────────────
+  backend:
+    command: |
+      # Kill any process still holding port 8000 before we try to bind
+      ss -Htlnp 'sport = :8000' | grep -oP 'pid=\K[0-9]+' | xargs -r kill -9 2>/dev/null || true
+      sleep 0.3
+      cd backend
+      echo "[backend] Running migrations..."
+      alembic upgrade head
+      echo "[backend] Starting uvicorn..."
+      exec uvicorn app.main:app \
+        --host 0.0.0.0 \
+        --port 8000 \
+        --reload \
+        --log-level debug
+    depends_on:
+      postgres-init:
+        condition: process_completed_successfully
+      redis:
+        condition: process_healthy
+    availability:
+      restart: on_failure
+      max_restarts: 5
+
+  # ── Vite frontend dev server ──────────────────────────────────────────────────
+  frontend:
+    command: |
+      # Kill any process still holding port 5173 before we try to bind
+      ss -Htlnp 'sport = :5173' | grep -oP 'pid=\K[0-9]+' | xargs -r kill -9 2>/dev/null || true
+      sleep 0.3
+      cd frontend
+      [ -d node_modules ] || npm install
+      exec npm run dev -- --host 0.0.0.0 --port 5173
+    availability:
+      restart: on_failure
+      max_restarts: 3

@@ -1,0 +1,30 @@
+{
+    # Disable auto-HTTPS in development
+    auto_https off
+}
+
+:80 {
+    # SSE — must be before the generic @api route so it takes priority
+    @sse path /api/v1/stream
+    route @sse {
+        reverse_proxy backend:8000 {
+            flush_interval -1
+            header_up Connection ""
+        }
+    }
+
+    # API — forward to backend
+    @api path /api/*
+    route @api {
+        reverse_proxy backend:8000 {
+            header_up Host {host}
+            header_up X-Real-IP {remote_host}
+            header_up X-Forwarded-For {remote_host}
+        }
+    }
+
+    # Vite dev server (HMR WebSocket + static assets)
+    reverse_proxy frontend:5173 {
+        header_up Host {host}
+    }
+}

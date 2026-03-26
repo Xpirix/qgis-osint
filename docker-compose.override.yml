@@ -1,0 +1,45 @@
+# Development overrides — hot reload, exposed ports, volumes
+services:
+  proxy:
+    volumes:
+      - ./docker/Caddyfile.dev:/etc/caddy/Caddyfile:ro
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    volumes:
+      - ./backend:/app
+      - ./data:/app/data:ro
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+      target: dev
+    command: npm run dev -- --host 0.0.0.0
+    volumes:
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+    # Override the production healthcheck to probe the Vite dev server
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:5173"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  db:
+    ports:
+      - "5432:5432"
+
+  cache:
+    ports:
+      - "6379:6379"

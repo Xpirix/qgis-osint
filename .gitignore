@@ -1,0 +1,68 @@
+# ── Environment & secrets ────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# ── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ── Node / SvelteKit ─────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/.svelte-kit/
+frontend/build/
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+# ── Database / Postgres ──────────────────────────────────────────────────────
+*.sql.bak
+postgres-data/
+pgdata/
+
+# ── Nix dev-stack local data (process-compose native services) ───────────────
+.dev-data/
+
+# ── Editor & OS ──────────────────────────────────────────────────────────────
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+Thumbs.db
+
+# ── Logs & caches ────────────────────────────────────────────────────────────
+*.log
+logs/
+.cache/
+
+# ── Generated / scraped data ─────────────────────────────────────────────────
+# backend/data/*.json
+# backend/data/*.geojson
+# !backend/data/.gitkeep
+
+# # ── Local data overrides ─────────────────────────────────────────────────────
+# data/*.json
+# data/*.geojson
+# !data/countries_polygon.geojson
+
+qgis-osint-matrix.html
+PLAN.md

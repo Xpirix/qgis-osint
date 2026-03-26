@@ -1,0 +1,86 @@
+{
+  "_comment": "Manually maintained list of upcoming geospatial events. Edit this file and rebuild the frontend to update the map.",
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [9.257, 46.836] },
+      "properties": {
+        "name": "QGIS User Conference 2026",
+        "short": "QGIS UC 2026",
+        "city": "Laax",
+        "country": "Switzerland",
+        "venue": "LAAX Galaaxy, Crap Sogn Gion",
+        "dates": "5–6 Oct 2026",
+        "date_start": "2026-10-05",
+        "date_end": "2026-10-06",
+        "url": "https://uc2026.qgis.org",
+        "status": "upcoming"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [132.459, 34.385] },
+      "properties": {
+        "name": "FOSS4G 2026",
+        "short": "FOSS4G 2026",
+        "city": "Hiroshima",
+        "country": "Japan",
+        "venue": "Hiroshima",
+        "dates": "Sep 2026",
+        "date_start": "2026-09-05",
+        "date_end": "2026-09-10",
+        "url": "https://2026.foss4g.org",
+        "status": "upcoming"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [21.209, 45.749] },
+      "properties": {
+        "name": "FOSS4G Europe 2026",
+        "short": "FOSS4G Europe",
+        "city": "Timișoara",
+        "country": "Romania",
+        "venue": "Timișoara",
+        "dates": "29 Jun–3 Jul 2026",
+        "date_start": "2026-06-29",
+        "date_end": "2026-07-03",
+        "url": "https://2026.europe.foss4g.org",
+        "status": "upcoming"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [73.790, 19.997] },
+      "properties": {
+        "name": "FOSS4G Asia 2026",
+        "short": "FOSS4G Asia",
+        "city": "Nashik",
+        "country": "India",
+        "venue": "Nashik",
+        "dates": "21–25 Jan 2026",
+        "date_start": "2026-01-21",
+        "date_end": "2026-01-25",
+        "url": "https://foss4g.asia/2026/",
+        "status": "past"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-121.494, 38.576] },
+      "properties": {
+        "name": "FOSS4G North America 2026",
+        "short": "FOSS4GNA 2026",
+        "city": "Sacramento",
+        "country": "USA",
+        "venue": "Sacramento, California",
+        "dates": "2–4 Nov 2026",
+        "date_start": "2026-11-02",
+        "date_end": "2026-11-04",
+        "url": "https://www.foss4gna.org",
+        "status": "upcoming"
+      }
+    }
+  ]
+}
