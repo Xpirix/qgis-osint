@@ -38,7 +38,7 @@
 							style="--tag-c: {item.tag_color ?? color}"
 						>{item.tag}</span>
 					{/if}
-					<span class="item-time">{relativeTime(item.published)}</span>
+					<span class="item-time">{relativeTime(item.timestamp)}</span>
 					{#if item.repo}
 						<span class="item-repo">{item.repo}</span>
 					{/if}
