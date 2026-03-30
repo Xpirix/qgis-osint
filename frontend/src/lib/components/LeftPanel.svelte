@@ -249,6 +249,10 @@
 	/* ── Panel body ──────────────────────────────────────────────── */
 	.nano-body {
 		padding: 4px 6px;
+		max-height: calc(100% - 30px);
+		overflow-y: auto;
+		scrollbar-width: thin;
+		scrollbar-color: rgba(88, 150, 50, 0.3) transparent;
 	}
 
 	.nano-body--stats {
