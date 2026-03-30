@@ -160,7 +160,7 @@
 		top: 50%;
 		transform: translateY(-50%);
 		z-index: 101;
-		left: calc(16px + 220px + 4px); /* right edge of column + 4px gap */
+		left: calc(16px + 220px); /* right edge of column */
 		width: 18px;
 		height: 44px;
 		display: flex;
@@ -169,13 +169,14 @@
 		cursor: pointer;
 		background: rgba(17, 28, 43, 0.82);
 		backdrop-filter: blur(18px) saturate(140%);
-		border: 1px solid rgba(88, 150, 50, 0.28);
+		border: 3px solid rgba(255, 242, 0, 0.28);
 		border-left: none;
 		border-radius: 0 8px 8px 0;
 		box-shadow: 3px 0 12px rgba(0,0,0,0.35);
-		color: var(--qgis-light-green);
+		color: var(--qgis-lemon);
 		font-family: var(--font-mono);
-		font-size: 13px;
+		font-size: 19pt;
+		font-weight: bold;
 		line-height: 1;
 		transition:
 			left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
@@ -185,15 +186,14 @@
 
 	.panel-tab.is-collapsed {
 		left: 0;
-		border-left: 1px solid rgba(88, 150, 50, 0.28);
+		border: 3px solid rgba(255, 242, 0, 0.28);
 		border-radius: 0 8px 8px 0;
 	}
 
 	.panel-tab:hover {
 		background: rgba(17, 28, 43, 0.96);
-		border-color: rgba(88, 150, 50, 0.55);
-		box-shadow: 3px 0 16px rgba(147, 176, 35, 0.25);
-		color: #c6e04a;
+		border-color: rgba(255, 242, 0, 0.55);
+		box-shadow: 3px 0 16px rgba(255, 242, 0, 0.25);
 	}
 
 	.panel-tab:focus-visible {
