@@ -52,22 +52,6 @@
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [73.790, 19.997] },
-      "properties": {
-        "name": "FOSS4G Asia 2026",
-        "short": "FOSS4G Asia",
-        "city": "Nashik",
-        "country": "India",
-        "venue": "Nashik",
-        "dates": "21–25 Jan 2026",
-        "date_start": "2026-01-21",
-        "date_end": "2026-01-25",
-        "url": "https://foss4g.asia/2026/",
-        "status": "past"
-      }
-    },
-    {
-      "type": "Feature",
       "geometry": { "type": "Point", "coordinates": [-121.494, 38.576] },
       "properties": {
         "name": "FOSS4G North America 2026",
