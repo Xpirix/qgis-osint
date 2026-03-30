@@ -30,9 +30,9 @@ export interface Stats {
 const DEFAULTS: Stats = {
 	contributors_total: 809,
 	contributors_geo_located: 0,
-	user_groups: 38,
+	user_groups: 0,
 	sustaining_members: 0,
-	plugin_count: 1000,
+	plugin_count: 0,
 	hub_resources: 0,
 	github_stars: 0,
 	github_forks: 0,

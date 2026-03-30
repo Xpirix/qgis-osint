@@ -59,7 +59,7 @@
 			<div class="stat-row">
 				<span class="stat-label">Contributors</span>
 				<span class="stat-value" style="color: var(--layer-contributors)">
-					{stats.contributors_geo_located ?? '…'} / {stats.contributors_total ?? 809}
+					{stats.contributors_geo_located ?? '…'}
 				</span>
 			</div>
 			<div class="stat-row">

@@ -30,11 +30,11 @@ QGIS OSINT Matrix visualises data from the public QGIS ecosystem on a full-scree
 **Layers on the map**
 - Contributors (commit-tier sized avatars; higher commit count renders on top)
 - Supporting contributors (avatar markers from `supporting_map.json`)
-- User groups (country polygons — 33 countries highlighted)
-- Events / Hackfests (28 locations worldwide)
+- User groups (country polygons)
+- Past and Upcoming Events
 
 **Sustaining members panel**
-- Collapsible side panel listing 123 sustaining members (organisations) grouped by tier (Flagship / Large / Medium / Small) — not shown on the map
+- Collapsible side panel listing of sustaining members (organisations) grouped by tier (Flagship / Large / Medium / Small) — not shown on the map
 
 **Live feed channels**
 - GitHub commits, releases, QEPs
