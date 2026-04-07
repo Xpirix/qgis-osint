@@ -2,9 +2,9 @@
 	import FeedTrack from './FeedTrack.svelte';
 
 	const FEEDS = [
-		{ id: 'commits', channels: ['commits'],              label: 'COMMITS', id_tag: 'SYS/FEED/001', color: '#93b023' },
-		{ id: 'signal',  channels: ['news', 'blog', 'planet'], label: 'SIGNAL',  id_tag: 'SYS/FEED/002', color: '#38bdf8' },
-		{ id: 'plugins', channels: ['plugins'],              label: 'PLUGINS', id_tag: 'SYS/FEED/003', color: '#34d399' },
+		{ id: 'commits', channels: ['commits'],              label: 'COMMITS',   id_tag: 'SYS/FEED/001', color: '#93b023' },
+		{ id: 'signal',  channels: ['news', 'blog', 'planet'], label: 'SIGNAL',    id_tag: 'SYS/FEED/002', color: '#38bdf8' },
+		{ id: 'plugins', channels: ['plugins', 'hub'],         label: 'RESOURCES', id_tag: 'SYS/FEED/003', color: '#34d399' },
 	];
 
 	let collapsed = $state(false);

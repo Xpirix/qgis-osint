@@ -40,7 +40,8 @@ async def fetch_hub():
                 "title": f"{name}",
                 "meta": f"{creator} · {rtype} · {upload_date}",
                 "tag": str(rtype).upper()[:8],
-                "color": "#7ecba1",
+                "tag_color": "#a78bfa",
+                "color": "#a78bfa",
                 "url": f"https://hub.qgis.org/geopackages/{res_uuid}/" if res_uuid else "https://hub.qgis.org",
                 "timestamp": resource.get("upload_date", resource.get("date", "")),
             })

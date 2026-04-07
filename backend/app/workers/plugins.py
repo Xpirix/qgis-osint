@@ -98,7 +98,8 @@ def _parse_plugins_html(html: str) -> list[dict]:
             "meta":      f"{author} · {update_date}",
             "author":    author,
             "tag":       "PLUGIN",
-            "color":     "#ee7913",
+            "tag_color": "#34d399",
+            "color":     "#34d399",
             "url":       f"https://plugins.qgis.org/plugins/{slug}/",
             "published": update_date,
             "timestamp": update_ts,   # ISO 8601 from title attr — used for dedup

@@ -26,7 +26,7 @@
 
 	// Load initial stats + all feeds on mount in parallel so panels aren't empty
 	onMount(async () => {
-		const FEED_CHANNELS = ['commits', 'news', 'blog', 'planet', 'plugins', 'qeps'] as const;
+		const FEED_CHANNELS = ['commits', 'news', 'blog', 'planet', 'plugins', 'hub', 'qeps'] as const;
 		const [statsR, ...feedRs] = await Promise.allSettled([
 			fetch('/api/v1/stats'),
 			...FEED_CHANNELS.map(ch => fetch(`/api/v1/feeds/${ch}?limit=30`)),
