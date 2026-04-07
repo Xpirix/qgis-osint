@@ -87,6 +87,7 @@ function upcoming_events(props: Record<string, unknown>) {
 			<strong>${escape(props.name ?? 'Unknown')}</strong>
 		</div>
 		<div class="popup-body">
+			${props.image ? `<img src="${escape(props.image)}" alt="${escape(props.name ?? '')}" style="width:100%;border-radius:4px;margin-bottom:8px;display:block;opacity:0.9">` : ''}
 			<div class="popup-row"><span class="popup-key">Dates</span>
 				<span class="popup-val">${escape(props.dates ?? '—')}</span></div>
 			<div class="popup-row"><span class="popup-key">Location</span>
@@ -215,6 +216,7 @@ export function setupPopups(map: Map) {
 	// Point/symbol features always win over polygon features so that a contributor
 	// or event pin above a user-group country polygon gets its own popup.
 	map.on('click', (e) => {
+		if ((e.originalEvent.target as Element)?.closest('.ue-marker')) return;
 		const features = map.queryRenderedFeatures(e.point, { layers: LAYER_IDS });
 		if (!features.length) return;
 

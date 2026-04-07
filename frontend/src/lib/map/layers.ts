@@ -251,8 +251,9 @@ const EVENT_COLOURS: Record<string, string> = {
 	'QGIS User Conference 2026': '#93b023',
 	'FOSS4G 2026':               '#38bdf8',
 	'FOSS4G Europe 2026':        '#a855f7',
-	'FOSS4G Asia 2026':          '#4b5563',
 	'FOSS4G North America 2026': '#ee7913',
+	'State of the Map 2026':     '#f43f5e',
+	'FOSSGIS 2027':              '#facc15',
 };
 
 const esc = (s: string) =>
@@ -263,7 +264,16 @@ export async function initUpcomingEventMarkers(map: maplibregl.Map): Promise<map
 	const fc = await res.json() as { features: Array<{ geometry: { coordinates: [number, number] }, properties: Record<string, string> }> };
 	const markers: maplibregl.Marker[] = [];
 
-	for (const feature of fc.features) {
+	// Sort soonest-first so we can assign descending z-index (soonest on top)
+	const today = Date.now();
+	const sorted = [...fc.features].sort((a, b) => {
+		const da = Math.abs(new Date(a.properties.date_start ?? '9999').getTime() - today);
+		const db = Math.abs(new Date(b.properties.date_start ?? '9999').getTime() - today);
+		return da - db;
+	});
+	const maxZ = sorted.length;
+
+	sorted.forEach((feature, idx) => {
 		const p        = feature.properties;
 		const isPast   = p.status === 'past';
 		const color    = isPast ? '#4b5563' : (EVENT_COLOURS[p.name] ?? '#ee7913');
@@ -271,14 +281,17 @@ export async function initUpcomingEventMarkers(map: maplibregl.Map): Promise<map
 		const el = document.createElement('div');
 		el.className = 'ue-marker' + (isPast ? ' is-past' : '');
 		el.style.setProperty('--ue-color', color);
+		// Soonest event (idx 0) gets the highest z-index
+		el.style.zIndex = String(maxZ - idx);
 		el.innerHTML = `
 			<div class="ue-card">
 				<button class="ue-close" title="Dismiss">&#215;</button>
-				<div class="ue-header">!! CONF !!</div>
-				<div class="ue-title">${esc(p.name)}</div>
-				<div class="ue-meta">${esc(p.city)} · ${esc(p.country)}</div>
-				<div class="ue-dates">${esc(p.dates)}</div>
-				<a class="ue-footer" href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">[REGISTER ↗]</a>
+				<a class="ue-card-link" href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">
+					<div class="ue-header">${esc(p.short ?? p.name)}</div>
+					${p.image ? `<img class="ue-img" src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy">` : ''}
+					<div class="ue-meta">${esc(p.city)}, ${esc(p.country)}</div>
+					<div class="ue-dates">${esc(p.dates)}</div>
+				</a>
 			</div>
 			<div class="ue-stem"></div>
 			<div class="ue-dot"></div>`;
@@ -296,7 +309,7 @@ export async function initUpcomingEventMarkers(map: maplibregl.Map): Promise<map
 			.addTo(map);
 
 		markers.push(marker);
-	}
+	});
 
 	return markers;
 }

@@ -172,6 +172,7 @@ html, body {
   align-items:    center;
   pointer-events: none;              /* stem & dot don't block map drags   */
   filter:         drop-shadow(0 6px 20px rgba(0,0,0,0.65));
+  position:       relative;         /* required for z-index to take effect */
 }
 
 .ue-card {
@@ -179,7 +180,7 @@ html, body {
   background:       rgba(10, 16, 28, 0.93);
   border:           1px solid var(--ue-color);
   border-radius:    5px;
-  padding:          8px 26px 7px 10px;
+  padding:          8px 10px 7px 10px;
   min-width:        172px;
   max-width:        220px;
   text-align:       center;
@@ -188,6 +189,17 @@ html, body {
   box-shadow:       0 0 22px color-mix(in srgb, var(--ue-color) 28%, transparent),
                     inset 0 1px 0 rgba(255,255,255,0.05);
   transition:       opacity 0.2s;
+}
+
+.ue-img {
+  display: block;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 6px;
+  opacity: 0.88;
+  object-fit: cover;
+  height: 70px;
 }
 .ue-hidden { display: none !important; }
 
@@ -208,6 +220,7 @@ html, body {
 .ue-close:hover { color: rgba(200, 220, 180, 0.85); }
 
 .ue-header {
+  display:        block;
   font-size:      9px;
   font-weight:    700;
   letter-spacing: 3px;
@@ -216,6 +229,14 @@ html, body {
   margin-bottom:  5px;
   text-transform: uppercase;
 }
+
+.ue-card-link {
+  display:         block;
+  text-decoration: none;
+  cursor:          pointer;
+}
+.ue-card-link:hover .ue-header { opacity: 0.75; }
+.ue-card-link:hover .ue-img    { opacity: 1; }
 
 .ue-title {
   font-size:    11px;
@@ -227,8 +248,10 @@ html, body {
 
 .ue-meta {
   font-size:      9px;
-  color:          rgba(200, 221, 176, 0.52);
+  color:          var(--ue-color);
   letter-spacing: 0.4px;
+  opacity:        0.8;
+  margin-top:     4px;
 }
 
 .ue-dates {
@@ -237,20 +260,6 @@ html, body {
   margin-top:  2px;
   opacity:     0.9;
 }
-
-.ue-footer {
-  pointer-events: all;
-  display:        block;
-  margin-top:     5px;
-  font-size:      9px;
-  letter-spacing: 1.5px;
-  color:          rgba(200, 221, 176, 0.38);
-  text-decoration: none;
-  border-top:     1px solid rgba(255, 255, 255, 0.06);
-  padding-top:    5px;
-  transition:     color 0.15s;
-}
-.ue-footer:hover { color: var(--ue-color); }
 
 .ue-stem {
   width:        0;
@@ -268,11 +277,9 @@ html, body {
 }
 
 /* Past event dims everything to grey */
-.is-past .ue-card  { border-color: rgba(75, 85, 99, 0.55); box-shadow: none; }
-.is-past .ue-header,
-.is-past .ue-dates,
-.is-past .ue-footer { color: rgba(100, 116, 139, 0.6); text-shadow: none; }
+.is-past .ue-card   { border-color: rgba(75, 85, 99, 0.55); box-shadow: none; }
+.is-past .ue-header { color: rgba(100, 116, 139, 0.6); text-shadow: none; }
 .is-past .ue-title,
-.is-past .ue-meta   { color: rgba(100, 116, 139, 0.6); }
+.is-past .ue-meta   { color: rgba(100, 116, 139, 0.6); opacity: 1; }
 .is-past .ue-stem   { border-color: rgba(75, 85, 99, 0.45); }
 .is-past .ue-dot    { background: rgba(75, 85, 99, 0.65); box-shadow: none; }

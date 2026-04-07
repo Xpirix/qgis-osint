@@ -1,7 +1,58 @@
 {
-  "_comment": "Manually maintained list of upcoming geospatial events. Edit this file and rebuild the frontend to update the map.",
+  "_comment": "Upcoming geospatial events. Sourced from https://www.osgeo.org/events/ — edit this file to update the map. Images live in /img/events/.",
   "type": "FeatureCollection",
   "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [21.209, 45.749] },
+      "properties": {
+        "name": "FOSS4G Europe 2026",
+        "short": "FOSS4G Europe",
+        "city": "Timișoara",
+        "country": "Romania",
+        "venue": "Timișoara, România",
+        "dates": "29 Jun – 5 Jul 2026",
+        "date_start": "2026-06-29",
+        "date_end": "2026-07-05",
+        "url": "https://2026.europe.foss4g.org",
+        "image": "/img/events/foss4g-europe-2026.png",
+        "status": "upcoming"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [2.352, 48.857] },
+      "properties": {
+        "name": "State of the Map 2026",
+        "short": "SotM 2026",
+        "city": "Paris",
+        "country": "France",
+        "venue": "Paris, France",
+        "dates": "28–30 Aug 2026",
+        "date_start": "2026-08-28",
+        "date_end": "2026-08-30",
+        "url": "https://2026.stateofthemap.org",
+        "image": "/img/events/sotm-2026.png",
+        "status": "upcoming"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [132.459, 34.385] },
+      "properties": {
+        "name": "FOSS4G 2026",
+        "short": "FOSS4G 2026",
+        "city": "Hiroshima",
+        "country": "Japan",
+        "venue": "Hiroshima, Japan",
+        "dates": "30 Aug – 5 Sep 2026",
+        "date_start": "2026-08-30",
+        "date_end": "2026-09-05",
+        "url": "https://2026.foss4g.org",
+        "image": "/img/events/foss4g-2026.png",
+        "status": "upcoming"
+      }
+    },
     {
       "type": "Feature",
       "geometry": { "type": "Point", "coordinates": [9.257, 46.836] },
@@ -15,38 +66,7 @@
         "date_start": "2026-10-05",
         "date_end": "2026-10-06",
         "url": "https://uc2026.qgis.org",
-        "status": "upcoming"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [132.459, 34.385] },
-      "properties": {
-        "name": "FOSS4G 2026",
-        "short": "FOSS4G 2026",
-        "city": "Hiroshima",
-        "country": "Japan",
-        "venue": "Hiroshima",
-        "dates": "Sep 2026",
-        "date_start": "2026-09-05",
-        "date_end": "2026-09-10",
-        "url": "https://2026.foss4g.org",
-        "status": "upcoming"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [21.209, 45.749] },
-      "properties": {
-        "name": "FOSS4G Europe 2026",
-        "short": "FOSS4G Europe",
-        "city": "Timișoara",
-        "country": "Romania",
-        "venue": "Timișoara",
-        "dates": "29 Jun–3 Jul 2026",
-        "date_start": "2026-06-29",
-        "date_end": "2026-07-03",
-        "url": "https://2026.europe.foss4g.org",
+        "image": "/img/events/qgis-uc-2026.png",
         "status": "upcoming"
       }
     },
@@ -63,6 +83,23 @@
         "date_start": "2026-11-02",
         "date_end": "2026-11-04",
         "url": "https://www.foss4gna.org",
+        "status": "upcoming"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [8.682, 49.397] },
+      "properties": {
+        "name": "FOSSGIS 2027",
+        "short": "FOSSGIS 2027",
+        "city": "Heidelberg",
+        "country": "Germany",
+        "venue": "Heidelberg, Germany",
+        "dates": "9–13 Mar 2027",
+        "date_start": "2027-03-09",
+        "date_end": "2027-03-13",
+        "url": "https://www.fossgis-konferenz.de/2027",
+        "image": "/img/events/fossgis-2027.png",
         "status": "upcoming"
       }
     }
