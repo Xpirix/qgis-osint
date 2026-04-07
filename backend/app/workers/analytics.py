@@ -1,17 +1,10 @@
-"""Analytics worker — Matomo public API, Metabase, and version.qgis.org."""
+"""Analytics worker — version.qgis.org."""
 from __future__ import annotations
 import logging
 import httpx
 from app.core.redis import cache_get_json, cache_set_json, publish_sse
 
 log = logging.getLogger(__name__)
-
-MATOMO_API = (
-    "https://matomo.qgis.org/index.php"
-    "?module=API&method=UserCountry.getCountry"
-    "&period=month&date=today&format=JSON"
-    "&token_auth=anonymous&idSite=1"
-)
 
 VERSION_URL = "https://version.qgis.org/version.json"
 
@@ -50,17 +43,6 @@ async def fetch_analytics():
         await cache_set_json("stats:latest", stats, ttl=86400)
         await publish_sse("stats_update", stats)
         await cache_set_json("version:latest", version_data, ttl=3600)
-
-    # Fetch Matomo analytics
-    try:
-        async with httpx.AsyncClient(timeout=30.0, follow_redirects=True) as client:
-            resp = await client.get(MATOMO_API)
-            if resp.status_code == 200:
-                data = resp.json()
-                await cache_set_json("analytics:country", data, ttl=86400)
-                log.info("Analytics: got %d countries", len(data) if isinstance(data, list) else 0)
-    except Exception as exc:
-        log.warning("Analytics (Matomo) worker failed: %s", exc)
 
     log.info("Analytics worker done")
 

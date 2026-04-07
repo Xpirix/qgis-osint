@@ -29,7 +29,7 @@ APScheduler workers (backend) ────── coordinate resolver
 | `hub.py` | QGIS Hub resources (styles, models, etc.) | **30 min** | Startup |
 | `metabase.py` | Plugin count/downloads, QGIS opens, hub typed counts | **60 min** | Startup |
 | `layers.py` | Contributors GeoJSON + supporting GeoJSON (proxy cache) | **60 min** | Startup |
-| `analytics.py` | QGIS version info (`version.qgis.org`) + Matomo country data | **24h** | Startup |
+| `analytics.py` | QGIS version info (`version.qgis.org`) | **24h** | Startup |
 | `scraper.py` | Sustaining members (map pins), user groups, events | **24h** | Startup |
 
 All workers fire **immediately on backend startup**, then on their interval.
@@ -95,7 +95,6 @@ docker compose exec backend python -m app.cli seed
 | Metabase stats (counts, downloads, opens) | ✅ Yes | 60 min | Metabase public API → Redis → SSE |
 | Contributor map pins | ✅ Yes | 60 min | qgis.org GeoJSON proxy → Redis |
 | QGIS version info | ✅ Yes | 24h | version.qgis.org → Redis → SSE |
-| Matomo country downloads | ✅ Yes | 24h | Matomo anonymous API → Redis |
 | Sustaining members (stats count) | ✅ Yes | 24h | members.qgis.org JSON API → Redis |
 | **User groups (map layer)** | ✅ Yes | 24h | GitHub JSON + country polygon join → Redis GeoJSON → map |
 | **Sustaining members (map pins)** | ✅ Yes | 24h | Live scrape → Redis GeoJSON → map |

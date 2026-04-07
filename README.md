@@ -198,13 +198,12 @@ All data is fetched from public endpoints — no authentication required unless 
 | 11 | GitHub commits — Docs | `https://api.github.com/repos/qgis/QGIS-Documentation/commits` | |
 | 12 | GitHub repo stats | `https://api.github.com/repos/qgis/QGIS` | Stars, forks, open issues |
 | 13 | Open QEPs | `https://api.github.com/repos/qgis/QGIS-Enhancement-Proposals/issues?state=open` | |
-| 14 | Matomo download analytics | `https://matomo.qgis.org/index.php?module=API&method=UserCountry.getCountry&period=month&date=today&format=JSON&token_auth=anonymous&idSite=1` | Anonymous public API |
-| 15 | Events / Hackfests | `https://raw.githubusercontent.com/qgis/QGIS/master/resources/data/qgis-hackfests.json` | Official GeoJSON with coordinates; 28 hackfest locations |
-| 16 | User groups | `https://raw.githubusercontent.com/qgis/QGIS/master/resources/data/user_groups_data.json` | Official JSON (no geometry); joined with local `data/countries_polygon.geojson` (iso_a2) to render country polygons |
-| 17 | QGIS Hub API | `https://hub.qgis.org/api/v1/resources/?limit=20` | Latest 20 published resources (styles, models, geopackages, 3D objects) for the hub feed; `?limit=1` used for total-resource count |
-| 18 | Metabase — plugins.qgis.org | `https://plugins.qgis.org/metabase/api/public/dashboard/7ecd345f-…` | Public dashboard cards: plugin count time-series and all-time download total; no auth token required |
-| 19 | Metabase — feed.qgis.org | `https://feed.qgis.org/metabase/api/public/dashboard/df81071d-…` | Public dashboard cards: QGIS opens last 30 days and opens yesterday |
-| 20 | Metabase — hub.qgis.org | `https://hub.qgis.org/metabase/api/public/dashboard/7ecd345f-…` | Public dashboard cards: published counts by resource type (styles, models, geopackages, 3D objects) |
+| 14 | Events / Hackfests | `https://raw.githubusercontent.com/qgis/QGIS/master/resources/data/qgis-hackfests.json` | Official GeoJSON with coordinates; 28 hackfest locations |
+| 15 | User groups | `https://raw.githubusercontent.com/qgis/QGIS/master/resources/data/user_groups_data.json` | Official JSON (no geometry); joined with local `data/countries_polygon.geojson` (iso_a2) to render country polygons |
+| 16 | QGIS Hub API | `https://hub.qgis.org/api/v1/resources/?limit=20` | Latest 20 published resources (styles, models, geopackages, 3D objects) for the hub feed; `?limit=1` used for total-resource count |
+| 17 | Metabase — plugins.qgis.org | `https://plugins.qgis.org/metabase/api/public/dashboard/7ecd345f-…` | Public dashboard cards: plugin count time-series and all-time download total; no auth token required |
+| 18 | Metabase — feed.qgis.org | `https://feed.qgis.org/metabase/api/public/dashboard/df81071d-…` | Public dashboard cards: QGIS opens last 30 days and opens yesterday |
+| 19 | Metabase — hub.qgis.org | `https://hub.qgis.org/metabase/api/public/dashboard/7ecd345f-…` | Public dashboard cards: published counts by resource type (styles, models, geopackages, 3D objects) |
 
 
 ---
